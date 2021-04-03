@@ -27,7 +27,7 @@ public class MangaDTOBuilder {
     private int quantity = 10;
 
     @Builder.Default
-    private MangaType type = MangaType.LAGER;
+    private MangaType type = MangaType.OTHER;
 
     public MangaDTO toBeerDTO() {
         return new MangaDTO(id,

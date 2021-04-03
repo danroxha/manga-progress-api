@@ -23,36 +23,36 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/beers")
+@RequestMapping("/api/v1/mangas")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class MangaController implements MangaControllerDocs {
 
-    private final MangaService beerService;
+    private final MangaService mangaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MangaDTO createBeer(@RequestBody @Valid MangaDTO beerDTO) throws MangaAlreadyRegisteredException {
-        return beerService.createBeer(beerDTO);
+    public MangaDTO createBeer(@RequestBody @Valid MangaDTO mangaDTO) throws MangaAlreadyRegisteredException {
+        return mangaService.createManga(mangaDTO);
     }
 
     @GetMapping("/{name}")
     public MangaDTO findByName(@PathVariable String name) throws MangaNotFoundException {
-        return beerService.findByName(name);
+        return mangaService.findByName(name);
     }
 
     @GetMapping
     public List<MangaDTO> listBeers() {
-        return beerService.listAll();
+        return mangaService.listAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws MangaNotFoundException {
-        beerService.deleteById(id);
+        mangaService.deleteById(id);
     }
 
     @PatchMapping("/{id}/increment")
     public MangaDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws MangaNotFoundException, MangaExceededException {
-        return beerService.increment(id, quantityDTO.getQuantity());
+        return mangaService.increment(id, quantityDTO.getQuantity());
     }
 }

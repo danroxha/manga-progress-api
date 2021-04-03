@@ -6,14 +6,17 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MangaType {
-
-    LAGER("Lager"),
-    MALZBIER("Malzbier"),
-    WITBIER("Witbier"),
-    WEISS("Weiss"),
-    ALE("Ale"),
-    IPA("IPA"),
-    STOUT("Stout");
+    DOUJINSHI("Doujinshi"),
+    GEKIGA("Gekiga"),
+    HENTAI("Hentai"),
+    JOSEI("Josei"),
+    SEINEN("Seinen"),
+    SHOUJO("Shoujo"),
+    SHONEN("Shoune"),
+    KODOMO("Kodomo"),
+    YURI("Yuri"),
+    YAOI("Yaoi"),
+    OTHER("Other");
 
     private final String description;
 }

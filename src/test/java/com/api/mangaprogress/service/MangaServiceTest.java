@@ -61,7 +61,7 @@ public class MangaServiceTest {
         when(beerRepository.save(expectedSavedBeer)).thenReturn(expectedSavedBeer);
 
         //then
-        MangaDTO createdBeerDTO = beerService.createBeer(expectedBeerDTO);
+        MangaDTO createdBeerDTO = beerService.createManga(expectedBeerDTO);
 
         assertThat(createdBeerDTO.getId(), is(equalTo(expectedBeerDTO.getId())));
         assertThat(createdBeerDTO.getName(), is(equalTo(expectedBeerDTO.getName())));
@@ -78,7 +78,7 @@ public class MangaServiceTest {
         when(beerRepository.findByName(expectedBeerDTO.getName())).thenReturn(Optional.of(duplicatedBeer));
 
         // then
-        assertThrows(MangaAlreadyRegisteredException.class, () -> beerService.createBeer(expectedBeerDTO));
+        assertThrows(MangaAlreadyRegisteredException.class, () -> beerService.createManga(expectedBeerDTO));
     }
 
     @Test

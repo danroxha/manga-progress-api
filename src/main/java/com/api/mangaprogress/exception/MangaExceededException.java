@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class MangaExceededException extends Exception {
 
     public MangaExceededException(Long id, int quantityToIncrement) {
-        super(String.format("Beers with %s ID to increment informed exceeds the max stock capacity: %s", id, quantityToIncrement));
+        super(String.format("Manga with %s ID to increment informed exceeds the max: %s", id, quantityToIncrement));
     }
 }

@@ -19,53 +19,53 @@ import com.api.mangaprogress.repository.MangaRepository;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class MangaService {
 
-    private final MangaRepository beerRepository;
-    private final MangaMapper beerMapper = MangaMapper.INSTANCE;
+    private final MangaRepository mangaRepository;
+    private final MangaMapper mangaMapper = MangaMapper.INSTANCE;
 
-    public MangaDTO createBeer(MangaDTO beerDTO) throws MangaAlreadyRegisteredException {
+    public MangaDTO createManga(MangaDTO beerDTO) throws MangaAlreadyRegisteredException {
         verifyIfIsAlreadyRegistered(beerDTO.getName());
-        Manga beer = beerMapper.toModel(beerDTO);
-        Manga savedBeer = beerRepository.save(beer);
-        return beerMapper.toDTO(savedBeer);
+        Manga beer = mangaMapper.toModel(beerDTO);
+        Manga savedBeer = mangaRepository.save(beer);
+        return mangaMapper.toDTO(savedBeer);
     }
 
     public MangaDTO findByName(String name) throws MangaNotFoundException {
-        Manga foundBeer = beerRepository.findByName(name)
+        Manga foundBeer = mangaRepository.findByName(name)
                 .orElseThrow(() -> new MangaNotFoundException(name));
-        return beerMapper.toDTO(foundBeer);
+        return mangaMapper.toDTO(foundBeer);
     }
 
     public List<MangaDTO> listAll() {
-        return beerRepository.findAll()
+        return mangaRepository.findAll()
                 .stream()
-                .map(beerMapper::toDTO)
+                .map(mangaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public void deleteById(Long id) throws MangaNotFoundException {
         verifyIfExists(id);
-        beerRepository.deleteById(id);
+        mangaRepository.deleteById(id);
     }
 
     private void verifyIfIsAlreadyRegistered(String name) throws MangaAlreadyRegisteredException {
-        Optional<Manga> optSavedBeer = beerRepository.findByName(name);
-        if (optSavedBeer.isPresent()) {
+        Optional<Manga> optSavedManga = mangaRepository.findByName(name);
+        if (optSavedManga.isPresent()) {
             throw new MangaAlreadyRegisteredException(name);
         }
     }
 
     private Manga verifyIfExists(Long id) throws MangaNotFoundException {
-        return beerRepository.findById(id)
+        return mangaRepository.findById(id)
                 .orElseThrow(() -> new MangaNotFoundException(id));
     }
 
     public MangaDTO increment(Long id, int quantityToIncrement) throws MangaNotFoundException, MangaExceededException {
-        Manga beerToIncrementStock = verifyIfExists(id);
-        int quantityAfterIncrement = quantityToIncrement + beerToIncrementStock.getQuantity();
-        if (quantityAfterIncrement <= beerToIncrementStock.getMax()) {
-            beerToIncrementStock.setQuantity(beerToIncrementStock.getQuantity() + quantityToIncrement);
-            Manga incrementedBeerStock = beerRepository.save(beerToIncrementStock);
-            return beerMapper.toDTO(incrementedBeerStock);
+        Manga mangaToIncrementStock = verifyIfExists(id);
+        int quantityAfterIncrement = quantityToIncrement + mangaToIncrementStock.getQuantity();
+        if (quantityAfterIncrement <= mangaToIncrementStock.getMax()) {
+            mangaToIncrementStock.setQuantity(mangaToIncrementStock.getQuantity() + quantityToIncrement);
+            Manga incrementedManga = mangaRepository.save(mangaToIncrementStock);
+            return mangaMapper.toDTO(incrementedManga);
         }
         throw new MangaExceededException(id, quantityToIncrement);
     }

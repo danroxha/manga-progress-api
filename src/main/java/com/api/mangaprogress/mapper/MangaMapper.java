@@ -10,7 +10,7 @@ public interface MangaMapper {
 
     MangaMapper INSTANCE = Mappers.getMapper(MangaMapper.class);
 
-    Manga toModel(MangaDTO beerDTO);
+    Manga toModel(MangaDTO mangaDTO);
 
-    MangaDTO toDTO(Manga beer);
+    MangaDTO toDTO(Manga manga);
 }
