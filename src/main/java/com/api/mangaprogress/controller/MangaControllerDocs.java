@@ -22,7 +22,7 @@ public interface MangaControllerDocs {
             @ApiResponse(code = 201, message = "Success manga creation"),
             @ApiResponse(code = 400, message = "Missing required fields or wrong field range value.")
     })
-    MangaDTO createBeer(MangaDTO mangaDTO) throws MangaAlreadyRegisteredException;
+    MangaDTO createManga(MangaDTO mangaDTO) throws MangaAlreadyRegisteredException;
 
     @ApiOperation(value = "Returns manga found by a given name")
     @ApiResponses(value = {
@@ -35,7 +35,7 @@ public interface MangaControllerDocs {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "List of all mangas registered in the system"),
     })
-    List<MangaDTO> listBeers();
+    List<MangaDTO> listMangas();
 
     @ApiOperation(value = "Delete a manga found by a given valid Id")
     @ApiResponses(value = {

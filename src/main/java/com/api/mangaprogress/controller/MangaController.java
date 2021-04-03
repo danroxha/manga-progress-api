@@ -28,7 +28,7 @@ public class MangaController implements MangaControllerDocs {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MangaDTO createBeer(@RequestBody @Valid MangaDTO mangaDTO) throws MangaAlreadyRegisteredException {
+    public MangaDTO createManga(@RequestBody @Valid MangaDTO mangaDTO) throws MangaAlreadyRegisteredException {
         return mangaService.createManga(mangaDTO);
     }
 
@@ -38,7 +38,7 @@ public class MangaController implements MangaControllerDocs {
     }
 
     @GetMapping
-    public List<MangaDTO> listBeers() {
+    public List<MangaDTO> listMangas() {
         return mangaService.listAll();
     }
 
