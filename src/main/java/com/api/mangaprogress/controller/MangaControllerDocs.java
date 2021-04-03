@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api("Manages beer stock")
-public interface BeerControllerDocs {
+public interface MangaControllerDocs {
 
     @ApiOperation(value = "Beer creation operation")
     @ApiResponses(value = {
