@@ -1,5 +1,5 @@
 ## Manga Progress API
-Desenvolvimento de testes unitários para validar uma API REST de gerenciamento de mangas lidos
+API REST de gerenciamento de mangas lidos
 
 ### Observação
 O projeto foi refatorado, para gerenciar mangas lidos por um usuario. Projeto
