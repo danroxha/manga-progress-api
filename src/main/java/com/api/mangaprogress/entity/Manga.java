@@ -39,5 +39,4 @@ public class Manga {
     @Column(nullable = false)
     private MangaType type;
 
-
 }
