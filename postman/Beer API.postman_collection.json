@@ -1,16 +1,16 @@
 {
 	"variables": [],
 	"info": {
-		"name": "Beer API",
+		"name": "Manga API",
 		"_postman_id": "2310266f-1c5d-0bd8-e78f-39e9340d8f95",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "List Beers",
+			"name": "List Mangas",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers",
+				"url": "http://localhost:8080/api/v1/mangas",
 				"method": "GET",
 				"header": [
 					{
@@ -25,9 +25,9 @@
 			"response": []
 		},
 		{
-			"name": "Create Beer",
+			"name": "Create Manga",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers",
+				"url": "http://localhost:8080/api/v1/mangas",
 				"method": "POST",
 				"header": [
 					{
@@ -38,16 +38,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Colorado appia\",\n\t\"brand\": \"Colorado\",\n\t\"max\": 20,\n\t\"quantity\": 10,\n\t\"type\": \"LAGER\"\n}"
+					"raw": "{\n\t\"name\": \"One Piece\",\n\t\"author\": \"Oda\",\n\t\"chapters\": 1001,\n\t\"type\": \"OTHER\"\n}"
 				},
 				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "Get beer by name",
+			"name": "Get manga by name",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers/Colorado appia",
+				"url": "http://localhost:8080/api/v1/mangas/One Piece",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -56,9 +56,9 @@
 			"response": []
 		},
 		{
-			"name": "Delete beer by id",
+			"name": "Delete manga by id",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers/1",
+				"url": "http://localhost:8080/api/v1/mangas/1",
 				"method": "DELETE",
 				"header": [
 					{
@@ -73,9 +73,9 @@
 			"response": []
 		},
 		{
-			"name": "Increment beer stock",
+			"name": "Increment manga chapter",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers/1/increment",
+				"url": "http://localhost:8080/api/v1/mangas/1/increment",
 				"method": "PATCH",
 				"header": [
 					{
@@ -86,16 +86,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"quantity\": 2\n}"
+					"raw": "{\n\t\"chapters\": 1\n}"
 				},
 				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "Decrement beer stock",
+			"name": "Decrement manga chapter",
 			"request": {
-				"url": "http://localhost:8080/api/v1/beers/1/decrement",
+				"url": "http://localhost:8080/api/v1/mangas/1/decrement",
 				"method": "PATCH",
 				"header": [
 					{
@@ -106,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"quantity\": 2\n}"
+					"raw": "{\n\t\"quantity\": 1\n}"
 				},
 				"description": ""
 			},
