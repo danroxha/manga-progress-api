@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.api.mangaprogress.enums.MangaType;
+import com.api.mangaprogress.enums.MangaGenre;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,5 +34,5 @@ public class MangaDTO {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private MangaType type;
+    private MangaGenre genre;
 }

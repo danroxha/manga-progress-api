@@ -3,7 +3,7 @@ package com.api.mangaprogress.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.api.mangaprogress.enums.MangaType;
+import com.api.mangaprogress.enums.MangaGenre;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +34,6 @@ public class Manga {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MangaType type;
+    private MangaGenre genre;
 
 }

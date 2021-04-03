@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MangaType {
+public enum MangaGenre {
     DOUJINSHI("Doujinshi"),
     GEKIGA("Gekiga"),
     HENTAI("Hentai"),

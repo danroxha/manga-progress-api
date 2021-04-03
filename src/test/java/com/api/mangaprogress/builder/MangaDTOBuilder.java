@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Builder;
 import com.api.mangaprogress.dto.MangaDTO;
-import com.api.mangaprogress.enums.MangaType;
+import com.api.mangaprogress.enums.MangaGenre;
 
 @Builder
 public class MangaDTOBuilder {
@@ -24,13 +24,13 @@ public class MangaDTOBuilder {
     private int chapters = 1001;
 
     @Builder.Default
-    private MangaType type = MangaType.OTHER;
+    private MangaGenre genre = MangaGenre.OTHER;
 
     public MangaDTO toBeerDTO() {
         return new MangaDTO(id,
                 name,
                 author,
                 chapters,
-                type);
+                genre);
     }
 }
