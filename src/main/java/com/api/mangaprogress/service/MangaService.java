@@ -5,7 +5,6 @@ import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.entity.Manga;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
-import com.api.mangaprogress.exception.MangaExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,14 +58,4 @@ public class MangaService {
                 .orElseThrow(() -> new MangaNotFoundException(id));
     }
 
-    public MangaDTO increment(Long id, int quantityToIncrement) throws MangaNotFoundException, MangaExceededException {
-        Manga mangaToIncrementStock = verifyIfExists(id);
-        int quantityAfterIncrement = quantityToIncrement + mangaToIncrementStock.getQuantity();
-        if (quantityAfterIncrement <= mangaToIncrementStock.getMax()) {
-            mangaToIncrementStock.setQuantity(mangaToIncrementStock.getQuantity() + quantityToIncrement);
-            Manga incrementedManga = mangaRepository.save(mangaToIncrementStock);
-            return mangaMapper.toDTO(incrementedManga);
-        }
-        throw new MangaExceededException(id, quantityToIncrement);
-    }
 }

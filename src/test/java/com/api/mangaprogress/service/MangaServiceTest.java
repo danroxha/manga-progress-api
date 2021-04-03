@@ -5,7 +5,6 @@ import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.entity.Manga;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
-import com.api.mangaprogress.exception.MangaExceededException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -152,56 +151,7 @@ public class MangaServiceTest {
         verify(beerRepository, times(1)).deleteById(expectedDeletedBeerDTO.getId());
     }
 
-    @Test
-    void whenIncrementIsCalledThenIncrementBeerStock() throws MangaNotFoundException, MangaExceededException {
-        //given
-        MangaDTO expectedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedBeer = beerMapper.toModel(expectedBeerDTO);
-
-        //when
-        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-        when(beerRepository.save(expectedBeer)).thenReturn(expectedBeer);
-
-        int quantityToIncrement = 10;
-        int expectedQuantityAfterIncrement = expectedBeerDTO.getQuantity() + quantityToIncrement;
-
-        // then
-        MangaDTO incrementedBeerDTO = beerService.increment(expectedBeerDTO.getId(), quantityToIncrement);
-
-        assertThat(expectedQuantityAfterIncrement, equalTo(incrementedBeerDTO.getQuantity()));
-        assertThat(expectedQuantityAfterIncrement, lessThan(expectedBeerDTO.getMax()));
-    }
-
-    @Test
-    void whenIncrementIsGreatherThanMaxThenThrowException() {
-        MangaDTO expectedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedBeer = beerMapper.toModel(expectedBeerDTO);
-
-        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-
-        int quantityToIncrement = 80;
-        assertThrows(MangaExceededException.class, () -> beerService.increment(expectedBeerDTO.getId(), quantityToIncrement));
-    }
-
-    @Test
-    void whenIncrementAfterSumIsGreatherThanMaxThenThrowException() {
-        MangaDTO expectedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedBeer = beerMapper.toModel(expectedBeerDTO);
-
-        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-
-        int quantityToIncrement = 45;
-        assertThrows(MangaExceededException.class, () -> beerService.increment(expectedBeerDTO.getId(), quantityToIncrement));
-    }
-
-    @Test
-    void whenIncrementIsCalledWithInvalidIdThenThrowException() {
-        int quantityToIncrement = 10;
-
-        when(beerRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
-
-        assertThrows(MangaNotFoundException.class, () -> beerService.increment(INVALID_BEER_ID, quantityToIncrement));
-    }
+  
 //
 //    @Test
 //    void whenDecrementIsCalledThenDecrementBeerStock() throws BeerNotFoundException, BeerStockExceededException {

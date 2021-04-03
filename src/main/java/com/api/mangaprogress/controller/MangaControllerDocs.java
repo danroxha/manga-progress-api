@@ -8,7 +8,6 @@ import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.dto.QuantityDTO;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
-import com.api.mangaprogress.exception.MangaExceededException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
