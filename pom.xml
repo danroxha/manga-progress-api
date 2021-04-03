@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>one.digitalinnovation</groupId>
-	<artifactId>beerstock</artifactId>
+	<artifactId>mangaprogress</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>beerstock</name>
+	<name>mangaprogress</name>
 	<description>Beer stock project for testing live coding</description>
 
 	<properties>
