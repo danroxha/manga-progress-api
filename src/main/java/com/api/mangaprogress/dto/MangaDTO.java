@@ -29,7 +29,7 @@ public class MangaDTO {
     private String author;
 
     @NotNull
-    @Max(100)
+    @Max(5000)
     private Integer chapters;
 
     @Enumerated(EnumType.STRING)
