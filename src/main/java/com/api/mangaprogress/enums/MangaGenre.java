@@ -12,7 +12,7 @@ public enum MangaGenre {
     JOSEI("Josei"),
     SEINEN("Seinen"),
     SHOUJO("Shoujo"),
-    SHONEN("Shoune"),
+    SHONEN("Shonen"),
     KODOMO("Kodomo"),
     YURI("Yuri"),
     YAOI("Yaoi"),
