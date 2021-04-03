@@ -5,13 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import com.api.mangaprogress.dto.MangaDTO;
-import com.api.mangaprogress.dto.QuantityDTO;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @Api("Manages mangas")

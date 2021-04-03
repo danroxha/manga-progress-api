@@ -2,7 +2,6 @@ package com.api.mangaprogress.controller;
 
 import com.api.mangaprogress.builder.MangaDTOBuilder;
 import com.api.mangaprogress.dto.MangaDTO;
-import com.api.mangaprogress.dto.QuantityDTO;
 import com.api.mangaprogress.exception.MangaNotFoundException;
 import com.api.mangaprogress.service.MangaService;
 import org.junit.jupiter.api.BeforeEach;
