@@ -21,21 +21,22 @@ public class MangaService {
     private final MangaRepository mangaRepository;
     private final MangaMapper mangaMapper = MangaMapper.INSTANCE;
 
-    public MangaDTO createManga(MangaDTO beerDTO) throws MangaAlreadyRegisteredException {
-        verifyIfIsAlreadyRegistered(beerDTO.getName());
-        Manga beer = mangaMapper.toModel(beerDTO);
-        Manga savedBeer = mangaRepository.save(beer);
-        return mangaMapper.toDTO(savedBeer);
+    public MangaDTO createManga(MangaDTO mangaDTO) throws MangaAlreadyRegisteredException {
+        verifyIfIsAlreadyRegistered(mangaDTO.getName());
+        Manga manga = mangaMapper.toModel(mangaDTO);
+        Manga savedManga = mangaRepository.save(manga);
+        return mangaMapper.toDTO(savedManga);
     }
 
     public MangaDTO findByName(String name) throws MangaNotFoundException {
-        Manga foundBeer = mangaRepository.findByName(name)
+        Manga foundManga = mangaRepository.findByName(name)
                 .orElseThrow(() -> new MangaNotFoundException(name));
-        return mangaMapper.toDTO(foundBeer);
+        return mangaMapper.toDTO(foundManga);
     }
 
     public List<MangaDTO> listAll() {
-        return mangaRepository.findAll()
+        return mangaRepository
+                .findAll()
                 .stream()
                 .map(mangaMapper::toDTO)
                 .collect(Collectors.toList());
@@ -47,14 +48,15 @@ public class MangaService {
     }
 
     private void verifyIfIsAlreadyRegistered(String name) throws MangaAlreadyRegisteredException {
-        Optional<Manga> optSavedManga = mangaRepository.findByName(name);
-        if (optSavedManga.isPresent()) {
+        Optional<Manga> optionalSavedManga = mangaRepository.findByName(name);
+        if (optionalSavedManga.isPresent()) {
             throw new MangaAlreadyRegisteredException(name);
         }
     }
 
     private Manga verifyIfExists(Long id) throws MangaNotFoundException {
-        return mangaRepository.findById(id)
+        return mangaRepository
+                .findById(id)
                 .orElseThrow(() -> new MangaNotFoundException(id));
     }
 
