@@ -32,23 +32,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class MangaControllerTest {
 
-    private static final String BEER_API_URL_PATH = "/api/v1/beers";
-    private static final long VALID_BEER_ID = 1L;
-    private static final long INVALID_BEER_ID = 2l;
-    private static final String BEER_API_SUBPATH_INCREMENT_URL = "/increment";
-    private static final String BEER_API_SUBPATH_DECREMENT_URL = "/decrement";
+    private static final String MANGA_API_URL_PATH = "/api/v1/mangas";
+    private static final long VALID_MANGA_ID = 1L;
+    private static final long INVALID_MANGA_ID = 2l;
+    private static final String MANGA_API_SUBPATH_INCREMENT_URL = "/increment";
+    private static final String MANGA_API_SUBPATH_DECREMENT_URL = "/decrement";
 
     private MockMvc mockMvc;
 
     @Mock
-    private MangaService beerService;
+    private MangaService mangaService;
 
     @InjectMocks
-    private MangaController beerController;
+    private MangaController mangaController;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(beerController)
+        mockMvc = MockMvcBuilders.standaloneSetup(mangaController)
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
                 .build();
@@ -192,7 +192,7 @@ public class MangaControllerTest {
                 .andExpect(jsonPath("$.type", is(beerDTO.getType().toString())))
                 .andExpect(jsonPath("$.quantity", is(beerDTO.getQuantity())));
     }
-    */
+     */
 //    @Test
 //    void whenPATCHIsCalledToIncrementGreatherThanMaxThenBadRequestStatusIsReturned() throws Exception {
 //        QuantityDTO quantityDTO = QuantityDTO.builder()
