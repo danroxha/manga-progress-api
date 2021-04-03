@@ -78,43 +78,43 @@ public class MangaControllerTest {
     @Test
     void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
-        beerDTO.setBrand(null);
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        mangaDTO.setBrand(null);
 
         // then
         mockMvc.perform(post(BEER_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(beerDTO)))
+                .content(asJsonString(mangaDTO)))
                 .andExpect(status().isBadRequest());
     }
    
     @Test
     void whenGETIsCalledWithValidNameThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
-        when(beerService.findByName(beerDTO.getName())).thenReturn(beerDTO);
+        when(beerService.findByName(mangaDTO.getName())).thenReturn(mangaDTO);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + beerDTO.getName())
+        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + mangaDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(beerDTO.getName())))
-                .andExpect(jsonPath("$.brand", is(beerDTO.getBrand())))
-                .andExpect(jsonPath("$.type", is(beerDTO.getType().toString())));
+                .andExpect(jsonPath("$.name", is(mangaDTO.getName())))
+                .andExpect(jsonPath("$.brand", is(mangaDTO.getBrand())))
+                .andExpect(jsonPath("$.type", is(mangaDTO.getType().toString())));
     }
     
     @Test
     void whenGETIsCalledWithoutRegisteredNameThenNotFoundStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
-        when(beerService.findByName(beerDTO.getName())).thenThrow(MangaNotFoundException.class);
+        when(beerService.findByName(mangaDTO.getName())).thenThrow(MangaNotFoundException.class);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + beerDTO.getName())
+        mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + mangaDTO.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -122,27 +122,27 @@ public class MangaControllerTest {
     @Test
     void whenGETListWithBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
-        when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
+        when(beerService.listAll()).thenReturn(Collections.singletonList(mangaDTO));
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name", is(beerDTO.getName())))
-                .andExpect(jsonPath("$[0].brand", is(beerDTO.getBrand())))
-                .andExpect(jsonPath("$[0].type", is(beerDTO.getType().toString())));
+                .andExpect(jsonPath("$[0].name", is(mangaDTO.getName())))
+                .andExpect(jsonPath("$[0].brand", is(mangaDTO.getBrand())))
+                .andExpect(jsonPath("$[0].type", is(mangaDTO.getType().toString())));
     }
     
     @Test
     void whenGETListWithoutBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
-        when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
+        when(beerService.listAll()).thenReturn(Collections.singletonList(mangaDTO));
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH)
@@ -153,13 +153,13 @@ public class MangaControllerTest {
     @Test
     void whenDELETEIsCalledWithValidIdThenNoContentStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
-        doNothing().when(beerService).deleteById(beerDTO.getId());
+        doNothing().when(beerService).deleteById(mangaDTO.getId());
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.delete(BEER_API_URL_PATH + "/" + beerDTO.getId())
+        mockMvc.perform(MockMvcRequestBuilders.delete(BEER_API_URL_PATH + "/" + mangaDTO.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -181,18 +181,18 @@ public class MangaControllerTest {
                 .quantity(10)
                 .build();
 
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
-        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        mangaDTO.setQuantity(mangaDTO.getQuantity() + quantityDTO.getQuantity());
 
-        when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(beerDTO);
+        when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(mangaDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.patch(BEER_API_URL_PATH + "/" + VALID_BEER_ID + BEER_API_SUBPATH_INCREMENT_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(quantityDTO))).andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(beerDTO.getName())))
-                .andExpect(jsonPath("$.brand", is(beerDTO.getBrand())))
-                .andExpect(jsonPath("$.type", is(beerDTO.getType().toString())))
-                .andExpect(jsonPath("$.quantity", is(beerDTO.getQuantity())));
+                .andExpect(jsonPath("$.name", is(mangaDTO.getName())))
+                .andExpect(jsonPath("$.brand", is(mangaDTO.getBrand())))
+                .andExpect(jsonPath("$.type", is(mangaDTO.getType().toString())))
+                .andExpect(jsonPath("$.quantity", is(mangaDTO.getQuantity())));
     }
      */
 //    @Test
@@ -201,8 +201,8 @@ public class MangaControllerTest {
 //                .quantity(30)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
+//        BeerDTO mangaDTO = BeerDTOBuilder.builder().build().toMangaDTO();
+//        mangaDTO.setQuantity(mangaDTO.getQuantity() + quantityDTO.getQuantity());
 //
 //        when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenThrow(BeerStockExceededException.class);
 //
@@ -230,18 +230,18 @@ public class MangaControllerTest {
 //                .quantity(5)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
+//        BeerDTO mangaDTO = BeerDTOBuilder.builder().build().toMangaDTO();
+//        mangaDTO.setQuantity(mangaDTO.getQuantity() + quantityDTO.getQuantity());
 //
-//        when(beerService.decrement(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(beerDTO);
+//        when(beerService.decrement(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(mangaDTO);
 //
 //        mockMvc.perform(patch(BEER_API_URL_PATH + "/" + VALID_BEER_ID + BEER_API_SUBPATH_DECREMENT_URL)
 //                .contentType(MediaType.APPLICATION_JSON)
 //                .content(asJsonString(quantityDTO))).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name", is(beerDTO.getName())))
-//                .andExpect(jsonPath("$.brand", is(beerDTO.getBrand())))
-//                .andExpect(jsonPath("$.type", is(beerDTO.getType().toString())))
-//                .andExpect(jsonPath("$.quantity", is(beerDTO.getQuantity())));
+//                .andExpect(jsonPath("$.name", is(mangaDTO.getName())))
+//                .andExpect(jsonPath("$.brand", is(mangaDTO.getBrand())))
+//                .andExpect(jsonPath("$.type", is(mangaDTO.getType().toString())))
+//                .andExpect(jsonPath("$.quantity", is(mangaDTO.getQuantity())));
 //    }
 //
 //    @Test
@@ -250,8 +250,8 @@ public class MangaControllerTest {
 //                .quantity(60)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
+//        BeerDTO mangaDTO = BeerDTOBuilder.builder().build().toMangaDTO();
+//        mangaDTO.setQuantity(mangaDTO.getQuantity() + quantityDTO.getQuantity());
 //
 //        when(beerService.decrement(VALID_BEER_ID, quantityDTO.getQuantity())).thenThrow(BeerStockExceededException.class);
 //

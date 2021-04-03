@@ -31,8 +31,8 @@ public class MangaDTO {
     @NotNull
     @Max(5000)
     private Integer chapters;
-
-    @Enumerated(EnumType.STRING)
+    
     @NotNull
+    @Enumerated(EnumType.STRING)
     private MangaGenre genre;
 }
