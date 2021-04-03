@@ -57,7 +57,7 @@ public class MangaControllerTest {
     @Test
     void whenPOSTIsCalledThenABeerIsCreated() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         // when
         when(beerService.createManga(beerDTO)).thenReturn(beerDTO);
@@ -76,7 +76,7 @@ public class MangaControllerTest {
     @Test
     void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
         beerDTO.setBrand(null);
 
         // then
@@ -89,7 +89,7 @@ public class MangaControllerTest {
     @Test
     void whenGETIsCalledWithValidNameThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
         when(beerService.findByName(beerDTO.getName())).thenReturn(beerDTO);
@@ -106,7 +106,7 @@ public class MangaControllerTest {
     @Test
     void whenGETIsCalledWithoutRegisteredNameThenNotFoundStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
         when(beerService.findByName(beerDTO.getName())).thenThrow(MangaNotFoundException.class);
@@ -120,7 +120,7 @@ public class MangaControllerTest {
     @Test
     void whenGETListWithBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
         when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
@@ -137,7 +137,7 @@ public class MangaControllerTest {
     @Test
     void whenGETListWithoutBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
         when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
@@ -151,7 +151,7 @@ public class MangaControllerTest {
     @Test
     void whenDELETEIsCalledWithValidIdThenNoContentStatusIsReturned() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         //when
         doNothing().when(beerService).deleteById(beerDTO.getId());
@@ -179,7 +179,7 @@ public class MangaControllerTest {
                 .quantity(10)
                 .build();
 
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
         beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
 
         when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(beerDTO);
@@ -199,7 +199,7 @@ public class MangaControllerTest {
 //                .quantity(30)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
 //
 //        when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenThrow(BeerStockExceededException.class);
@@ -228,7 +228,7 @@ public class MangaControllerTest {
 //                .quantity(5)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
 //
 //        when(beerService.decrement(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(beerDTO);
@@ -248,7 +248,7 @@ public class MangaControllerTest {
 //                .quantity(60)
 //                .build();
 //
-//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
 //
 //        when(beerService.decrement(VALID_BEER_ID, quantityDTO.getQuantity())).thenThrow(BeerStockExceededException.class);

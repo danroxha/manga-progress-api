@@ -24,9 +24,9 @@ public class MangaDTOBuilder {
     private int chapters = 1001;
 
     @Builder.Default
-    private MangaGenre genre = MangaGenre.OTHER;
+    private MangaGenre genre = MangaGenre.SHONEN;
 
-    public MangaDTO toBeerDTO() {
+    public MangaDTO toMangaDTO() {
         return new MangaDTO(id,
                 name,
                 author,

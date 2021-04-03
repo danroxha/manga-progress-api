@@ -39,123 +39,125 @@ import com.api.mangaprogress.repository.MangaRepository;
 @ExtendWith(MockitoExtension.class)
 public class MangaServiceTest {
 
-    private static final long INVALID_BEER_ID = 1L;
+    private static final long INVALID_MANGA_ID = 1L;
 
     @Mock
-    private MangaRepository beerRepository;
+    private MangaRepository mangaRepository;
 
-    private MangaMapper beerMapper = MangaMapper.INSTANCE;
+    private MangaMapper mangaMapper = MangaMapper.INSTANCE;
 
     @InjectMocks
-    private MangaService beerService;
+    private MangaService mangaService;
 
     @Test
     void whenBeerInformedThenItShouldBeCreated() throws MangaAlreadyRegisteredException {
         // given
-        MangaDTO expectedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedSavedBeer = beerMapper.toModel(expectedBeerDTO);
+        MangaDTO expectedMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        Manga expectedSavedManga = mangaMapper.toModel(expectedMangaDTO);
 
         // when
-        when(beerRepository.findByName(expectedBeerDTO.getName())).thenReturn(Optional.empty());
-        when(beerRepository.save(expectedSavedBeer)).thenReturn(expectedSavedBeer);
+        when(mangaRepository.findByName(expectedMangaDTO.getName())).thenReturn(Optional.empty());
+        when(mangaRepository.save(expectedSavedManga)).thenReturn(expectedSavedManga);
 
         //then
-        MangaDTO createdBeerDTO = beerService.createManga(expectedBeerDTO);
+        MangaDTO createdMangaDTO = mangaService.createManga(expectedMangaDTO);
 
-        assertThat(createdBeerDTO.getId(), is(equalTo(expectedBeerDTO.getId())));
-        assertThat(createdBeerDTO.getName(), is(equalTo(expectedBeerDTO.getName())));
-        // assertThat(createdBeerDTO.getQuantity(), is(equalTo(expectedBeerDTO.getQuantity())));
+        assertThat(createdMangaDTO.getId(), is(equalTo(expectedMangaDTO.getId())));
+        assertThat(createdMangaDTO.getName(), is(equalTo(expectedMangaDTO.getName())));
+        assertThat(createdMangaDTO.getAuthor(), is(equalTo(expectedMangaDTO.getAuthor())));
+        assertThat(createdMangaDTO.getChapters(), is(equalTo(expectedMangaDTO.getChapters())));
+        
     }
 
     @Test
-    void whenAlreadyRegisteredBeerInformedThenAnExceptionShouldBeThrown() {
+    void whenAlreadyRegisteredMangaInformedThenAnExceptionShouldBeThrown() {
         // given
-        MangaDTO expectedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga duplicatedBeer = beerMapper.toModel(expectedBeerDTO);
+        MangaDTO expectedMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        Manga duplicatedManga = mangaMapper.toModel(expectedMangaDTO);
 
         // when
-        when(beerRepository.findByName(expectedBeerDTO.getName())).thenReturn(Optional.of(duplicatedBeer));
+        when(mangaRepository.findByName(expectedMangaDTO.getName())).thenReturn(Optional.of(duplicatedManga));
 
         // then
-        assertThrows(MangaAlreadyRegisteredException.class, () -> beerService.createManga(expectedBeerDTO));
+        assertThrows(MangaAlreadyRegisteredException.class, () -> mangaService.createManga(expectedMangaDTO));
     }
 
     @Test
-    void whenValidBeerNameIsGivenThenReturnABeer() throws MangaNotFoundException {
+    void whenValidMangaNameIsGivenThenReturnAManga() throws MangaNotFoundException {
         // given
-        MangaDTO expectedFoundBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedFoundBeer = beerMapper.toModel(expectedFoundBeerDTO);
+        MangaDTO expectedFoundMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        Manga expectedFoundManga = mangaMapper.toModel(expectedFoundMangaDTO);
 
         // when
-        when(beerRepository.findByName(expectedFoundBeer.getName())).thenReturn(Optional.of(expectedFoundBeer));
+        when(mangaRepository.findByName(expectedFoundManga.getName())).thenReturn(Optional.of(expectedFoundManga));
 
         // then
-        MangaDTO foundBeerDTO = beerService.findByName(expectedFoundBeerDTO.getName());
+        MangaDTO foundMangaDTO = mangaService.findByName(expectedFoundMangaDTO.getName());
 
-        assertThat(foundBeerDTO, is(equalTo(expectedFoundBeerDTO)));
+        assertThat(foundMangaDTO, is(equalTo(expectedFoundMangaDTO)));
     }
 
     @Test
-    void whenNotRegisteredBeerNameIsGivenThenThrowAnException() {
+    void whenNotRegisteredMangaNameIsGivenThenThrowAnException() {
         // given
-        MangaDTO expectedFoundBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
+        MangaDTO expectedFoundMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         // when
-        when(beerRepository.findByName(expectedFoundBeerDTO.getName())).thenReturn(Optional.empty());
+        when(mangaRepository.findByName(expectedFoundMangaDTO.getName())).thenReturn(Optional.empty());
 
         // then
-        assertThrows(MangaNotFoundException.class, () -> beerService.findByName(expectedFoundBeerDTO.getName()));
+        assertThrows(MangaNotFoundException.class, () -> mangaService.findByName(expectedFoundMangaDTO.getName()));
     }
 
     @Test
-    void whenListBeerIsCalledThenReturnAListOfBeers() {
+    void whenListMangaIsCalledThenReturnAListOfMangas() {
         // given
-        MangaDTO expectedFoundBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedFoundBeer = beerMapper.toModel(expectedFoundBeerDTO);
+        MangaDTO expectedFoundMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        Manga expectedFoundManga = mangaMapper.toModel(expectedFoundMangaDTO);
 
         //when
-        when(beerRepository.findAll()).thenReturn(Collections.singletonList(expectedFoundBeer));
+        when(mangaRepository.findAll()).thenReturn(Collections.singletonList(expectedFoundManga));
 
         //then
-        List<MangaDTO> foundListBeersDTO = beerService.listAll();
+        List<MangaDTO> foundListMangasDTO = mangaService.listAll();
 
-        assertThat(foundListBeersDTO, is(not(empty())));
-        assertThat(foundListBeersDTO.get(0), is(equalTo(expectedFoundBeerDTO)));
+        assertThat(foundListMangasDTO, is(not(empty())));
+        assertThat(foundListMangasDTO.get(0), is(equalTo(expectedFoundMangaDTO)));
     }
 
     @Test
-    void whenListBeerIsCalledThenReturnAnEmptyListOfBeers() {
+    void whenListMangaIsCalledThenReturnAnEmptyListOfMangas() {
         //when
-        when(beerRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
+        when(mangaRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
 
         //then
-        List<MangaDTO> foundListBeersDTO = beerService.listAll();
+        List<MangaDTO> foundListMangasDTO = mangaService.listAll();
 
-        assertThat(foundListBeersDTO, is(empty()));
+        assertThat(foundListMangasDTO, is(empty()));
     }
 
     @Test
-    void whenExclusionIsCalledWithValidIdThenABeerShouldBeDeleted() throws MangaNotFoundException{
+    void whenExclusionIsCalledWithValidIdThenAMangaShouldBeDeleted() throws MangaNotFoundException{
         // given
-        MangaDTO expectedDeletedBeerDTO = MangaDTOBuilder.builder().build().toBeerDTO();
-        Manga expectedDeletedBeer = beerMapper.toModel(expectedDeletedBeerDTO);
+        MangaDTO expectedDeletedMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        Manga expectedDeletedManga = mangaMapper.toModel(expectedDeletedMangaDTO);
 
         // when
-        when(beerRepository.findById(expectedDeletedBeerDTO.getId())).thenReturn(Optional.of(expectedDeletedBeer));
-        doNothing().when(beerRepository).deleteById(expectedDeletedBeerDTO.getId());
+        when(mangaRepository.findById(expectedDeletedMangaDTO.getId())).thenReturn(Optional.of(expectedDeletedManga));
+        doNothing().when(mangaRepository).deleteById(expectedDeletedMangaDTO.getId());
 
         // then
-        beerService.deleteById(expectedDeletedBeerDTO.getId());
+        mangaService.deleteById(expectedDeletedMangaDTO.getId());
 
-        verify(beerRepository, times(1)).findById(expectedDeletedBeerDTO.getId());
-        verify(beerRepository, times(1)).deleteById(expectedDeletedBeerDTO.getId());
+        verify(mangaRepository, times(1)).findById(expectedDeletedMangaDTO.getId());
+        verify(mangaRepository, times(1)).deleteById(expectedDeletedMangaDTO.getId());
     }
 
   
 //
 //    @Test
 //    void whenDecrementIsCalledThenDecrementBeerStock() throws BeerNotFoundException, BeerStockExceededException {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
 //
 //        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
@@ -171,7 +173,7 @@ public class MangaServiceTest {
 //
 //    @Test
 //    void whenDecrementIsCalledToEmptyStockThenEmptyBeerStock() throws BeerNotFoundException, BeerStockExceededException {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
 //
 //        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
@@ -187,7 +189,7 @@ public class MangaServiceTest {
 //
 //    @Test
 //    void whenDecrementIsLowerThanZeroThenThrowException() {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
 //        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
 //
 //        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
