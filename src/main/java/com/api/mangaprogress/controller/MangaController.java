@@ -1,12 +1,12 @@
 package com.api.mangaprogress.controller;
 
 import lombok.AllArgsConstructor;
-import com.api.mangaprogress.dto.BeerDTO;
+import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.dto.QuantityDTO;
-import com.api.mangaprogress.exception.BeerAlreadyRegisteredException;
-import com.api.mangaprogress.exception.BeerNotFoundException;
-import com.api.mangaprogress.exception.BeerStockExceededException;
-import com.api.mangaprogress.service.BeerService;
+import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
+import com.api.mangaprogress.exception.MangaNotFoundException;
+import com.api.mangaprogress.exception.MangaExceededException;
+import com.api.mangaprogress.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,34 +25,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/beers")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class BeerController implements MangaControllerDocs {
+public class MangaController implements MangaControllerDocs {
 
-    private final BeerService beerService;
+    private final MangaService beerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BeerDTO createBeer(@RequestBody @Valid BeerDTO beerDTO) throws BeerAlreadyRegisteredException {
+    public MangaDTO createBeer(@RequestBody @Valid MangaDTO beerDTO) throws MangaAlreadyRegisteredException {
         return beerService.createBeer(beerDTO);
     }
 
     @GetMapping("/{name}")
-    public BeerDTO findByName(@PathVariable String name) throws BeerNotFoundException {
+    public MangaDTO findByName(@PathVariable String name) throws MangaNotFoundException {
         return beerService.findByName(name);
     }
 
     @GetMapping
-    public List<BeerDTO> listBeers() {
+    public List<MangaDTO> listBeers() {
         return beerService.listAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable Long id) throws BeerNotFoundException {
+    public void deleteById(@PathVariable Long id) throws MangaNotFoundException {
         beerService.deleteById(id);
     }
 
     @PatchMapping("/{id}/increment")
-    public BeerDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
+    public MangaDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws MangaNotFoundException, MangaExceededException {
         return beerService.increment(id, quantityDTO.getQuantity());
     }
 }

@@ -3,7 +3,7 @@ package com.api.mangaprogress.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.api.mangaprogress.enums.BeerType;
+import com.api.mangaprogress.enums.MangaType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Beer {
+public class Manga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Beer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BeerType type;
+    private MangaType type;
 
 
 }

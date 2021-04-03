@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.api.mangaprogress.enums.BeerType;
+import com.api.mangaprogress.enums.MangaType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BeerDTO {
+public class MangaDTO {
 
     private Long id;
 
@@ -38,5 +38,5 @@ public class BeerDTO {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private BeerType type;
+    private MangaType type;
 }

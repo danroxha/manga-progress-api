@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Builder;
-import com.api.mangaprogress.dto.BeerDTO;
-import com.api.mangaprogress.enums.BeerType;
+import com.api.mangaprogress.dto.MangaDTO;
+import com.api.mangaprogress.enums.MangaType;
 
 @Builder
-public class BeerDTOBuilder {
+public class MangaDTOBuilder {
 
     @Builder.Default
     private Long id = 1L;
@@ -27,10 +27,10 @@ public class BeerDTOBuilder {
     private int quantity = 10;
 
     @Builder.Default
-    private BeerType type = BeerType.LAGER;
+    private MangaType type = MangaType.LAGER;
 
-    public BeerDTO toBeerDTO() {
-        return new BeerDTO(id,
+    public MangaDTO toBeerDTO() {
+        return new MangaDTO(id,
                 name,
                 brand,
                 max,
