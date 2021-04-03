@@ -53,26 +53,28 @@ public class MangaControllerTest {
                 .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
                 .build();
     }
-    /*
+    
     @Test
-    void whenPOSTIsCalledThenABeerIsCreated() throws Exception {
+    void whenPOSTIsCalledThenAMangaIsCreated() throws Exception {
         // given
-        MangaDTO beerDTO = MangaDTOBuilder.builder().build().toMangaDTO();
+        MangaDTO mangaDTO = MangaDTOBuilder.builder().build().toMangaDTO();
 
         // when
-        when(beerService.createManga(beerDTO)).thenReturn(beerDTO);
+        when(mangaService.createManga(mangaDTO)).thenReturn(mangaDTO);
 
         // then
-        mockMvc.perform(post(BEER_API_URL_PATH)
+        mockMvc.perform(post(MANGA_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(beerDTO)))
+                .content(asJsonString(mangaDTO)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is(beerDTO.getName())))
-                .andExpect(jsonPath("$.brand", is(beerDTO.getBrand())))
-                .andExpect(jsonPath("$.type", is(beerDTO.getType().toString())));
+                .andExpect(jsonPath("$.name", is(mangaDTO.getName())))
+                .andExpect(jsonPath("$.author", is(mangaDTO.getAuthor())))
+                .andExpect(jsonPath("$.chapters", is(mangaDTO.getChapters())))
+                .andExpect(jsonPath("$.genre", is(mangaDTO.getGenre().toString())));
     }
     
-    
+    /*
+     
     @Test
     void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
