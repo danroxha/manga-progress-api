@@ -27,13 +27,10 @@ public class Manga {
     private String name;
 
     @Column(nullable = false)
-    private String brand;
+    private String author;
 
     @Column(nullable = false)
-    private int max;
-
-    @Column(nullable = false)
-    private int quantity;
+    private int chapters;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -26,15 +26,11 @@ public class MangaDTO {
 
     @NotNull
     @Size(min = 1, max = 200)
-    private String brand;
-
-    @NotNull
-    @Max(500)
-    private Integer max;
+    private String author;
 
     @NotNull
     @Max(100)
-    private Integer quantity;
+    private Integer chapters;
 
     @Enumerated(EnumType.STRING)
     @NotNull

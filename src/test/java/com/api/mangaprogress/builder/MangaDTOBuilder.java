@@ -15,16 +15,13 @@ public class MangaDTOBuilder {
     private Long id = 1L;
 
     @Builder.Default
-    private String name = "Brahma";
+    private String name = "One Piece";
 
     @Builder.Default
-    private String brand = "Ambev";
+    private String author = "Oda";
 
     @Builder.Default
-    private int max = 50;
-
-    @Builder.Default
-    private int quantity = 10;
+    private int chapters = 1001;
 
     @Builder.Default
     private MangaType type = MangaType.OTHER;
@@ -32,9 +29,8 @@ public class MangaDTOBuilder {
     public MangaDTO toBeerDTO() {
         return new MangaDTO(id,
                 name,
-                brand,
-                max,
-                quantity,
+                author,
+                chapters,
                 type);
     }
 }
