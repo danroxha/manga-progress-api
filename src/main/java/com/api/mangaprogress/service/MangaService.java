@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.entity.Manga;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
+import com.api.mangaprogress.exception.MangaDataInvalidException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,45 @@ public class MangaService {
     public void deleteById(Long id) throws MangaNotFoundException {
         verifyIfExists(id);
         mangaRepository.deleteById(id);
+    }
+    
+    public MangaDTO updateManga(MangaDTO mangaDTO, Long id) throws MangaNotFoundException, MangaDataInvalidException {
+        
+        Manga manga = mangaMapper.toModel(mangaDTO);
+
+        verifyIfIsValidDataManga(manga);
+        
+        Manga foundManga = mangaRepository.findById(id)
+                .orElseThrow(() -> new MangaNotFoundException(id));
+        
+  
+      	foundManga.setName(manga.getName());
+      	foundManga.setChapters(manga.getChapters());
+      	foundManga.setAuthor(manga.getAuthor());
+      	foundManga.setGenre(manga.getGenre());
+        
+        Manga updatedManga = mangaRepository.save(foundManga);
+        
+        return mangaMapper.toDTO(updatedManga);
+    }
+    
+    private void verifyIfIsValidDataManga(Manga manga) throws MangaDataInvalidException {
+    
+        final Integer MIN_VALUE_CHAPTER = 0;
+        final Integer MAX_VALUE_CHAPTER = 5000;
+        final Integer MIN_LENGTH_STRING = 1;
+        final Integer MAX_LENGTH_STRING = 200;
+        
+        boolean mangaChapterIsValid = manga.getChapters() >= MIN_VALUE_CHAPTER 
+                && manga.getChapters() <= MAX_VALUE_CHAPTER;
+        
+        boolean mangaNameIsValid = manga.getName() != null 
+                && manga.getName().length() >= MIN_LENGTH_STRING
+                && manga.getName().length() <= MAX_LENGTH_STRING;
+
+	if(!mangaNameIsValid || !mangaChapterIsValid)
+            throw new MangaDataInvalidException();
+       
     }
 
     private void verifyIfIsAlreadyRegistered(String name) throws MangaAlreadyRegisteredException {

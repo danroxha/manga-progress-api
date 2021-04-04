@@ -3,7 +3,9 @@ package com.api.mangaprogress.service;
 import com.api.mangaprogress.builder.MangaDTOBuilder;
 import com.api.mangaprogress.dto.MangaDTO;
 import com.api.mangaprogress.entity.Manga;
+import com.api.mangaprogress.enums.MangaGenre;
 import com.api.mangaprogress.exception.MangaAlreadyRegisteredException;
+import com.api.mangaprogress.exception.MangaDataInvalidException;
 import com.api.mangaprogress.exception.MangaNotFoundException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -152,58 +154,26 @@ public class MangaServiceTest {
         verify(mangaRepository, times(1)).findById(expectedDeletedMangaDTO.getId());
         verify(mangaRepository, times(1)).deleteById(expectedDeletedMangaDTO.getId());
     }
+    
+    @Test
+    void whenUpdateIsCalledWithValidIdThenAMangaShouldBeUpdated() throws MangaNotFoundException, MangaDataInvalidException{
+        // given
+        MangaDTO expectedUpdatedMangaDTO = MangaDTOBuilder.builder().build().toMangaDTO(); 
+        Manga expectedUpdatedManga = mangaMapper.toModel(expectedUpdatedMangaDTO);
+        
+        // when
+        when(mangaRepository.findById(expectedUpdatedMangaDTO.getId())).thenReturn(Optional.of(expectedUpdatedManga));
+        
+        expectedUpdatedMangaDTO.setName("Kimi ni Todoke");
+        expectedUpdatedMangaDTO.setChapters(300);
+        expectedUpdatedMangaDTO.setGenre(MangaGenre.SHOUJO);
+        
+        expectedUpdatedManga = mangaMapper.toModel(expectedUpdatedMangaDTO);
+        
+        // then
+        mangaService.updateManga(expectedUpdatedMangaDTO, expectedUpdatedMangaDTO.getId());
 
-  
-//
-//    @Test
-//    void whenDecrementIsCalledThenDecrementBeerStock() throws BeerNotFoundException, BeerStockExceededException {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
-//
-//        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-//        when(beerRepository.save(expectedBeer)).thenReturn(expectedBeer);
-//
-//        int quantityToDecrement = 5;
-//        int expectedQuantityAfterDecrement = expectedBeerDTO.getQuantity() - quantityToDecrement;
-//        BeerDTO incrementedBeerDTO = beerService.decrement(expectedBeerDTO.getId(), quantityToDecrement);
-//
-//        assertThat(expectedQuantityAfterDecrement, equalTo(incrementedBeerDTO.getQuantity()));
-//        assertThat(expectedQuantityAfterDecrement, greaterThan(0));
-//    }
-//
-//    @Test
-//    void whenDecrementIsCalledToEmptyStockThenEmptyBeerStock() throws BeerNotFoundException, BeerStockExceededException {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
-//
-//        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-//        when(beerRepository.save(expectedBeer)).thenReturn(expectedBeer);
-//
-//        int quantityToDecrement = 10;
-//        int expectedQuantityAfterDecrement = expectedBeerDTO.getQuantity() - quantityToDecrement;
-//        BeerDTO incrementedBeerDTO = beerService.decrement(expectedBeerDTO.getId(), quantityToDecrement);
-//
-//        assertThat(expectedQuantityAfterDecrement, equalTo(0));
-//        assertThat(expectedQuantityAfterDecrement, equalTo(incrementedBeerDTO.getQuantity()));
-//    }
-//
-//    @Test
-//    void whenDecrementIsLowerThanZeroThenThrowException() {
-//        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toMangaDTO();
-//        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
-//
-//        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-//
-//        int quantityToDecrement = 80;
-//        assertThrows(BeerStockExceededException.class, () -> beerService.decrement(expectedBeerDTO.getId(), quantityToDecrement));
-//    }
-//
-//    @Test
-//    void whenDecrementIsCalledWithInvalidIdThenThrowException() {
-//        int quantityToDecrement = 10;
-//
-//        when(beerRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
-//
-//        assertThrows(BeerNotFoundException.class, () -> beerService.decrement(INVALID_BEER_ID, quantityToDecrement));
-//    }
+        verify(mangaRepository, times(1)).findById(expectedUpdatedMangaDTO.getId());
+        verify(mangaRepository, times(1)).save(expectedUpdatedManga);
+    }
 }

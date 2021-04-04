@@ -9,6 +9,7 @@ import com.api.mangaprogress.enums.MangaGenre;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +30,7 @@ public class MangaDTO {
     private String author;
 
     @NotNull
+    @Min(0)
     @Max(5000)
     private Integer chapters;
     
