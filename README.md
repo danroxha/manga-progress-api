@@ -2,7 +2,7 @@
 API REST de gerenciamento de mangas lidos
 
 ### Observação
-O projeto foi refatorado, para gerenciar mangas lidos por um usuario. Projeto
+O projeto foi refatorado, para armazenar dados de mangas. Projeto
 original realizava o gerenciamento de estoque de cerveja.
 
 
@@ -19,13 +19,37 @@ mvn spring-boot:run
 mvn clean test
 ```
 
-Após executar o comando acima, basta apenas abrir o seguinte endereço e visualizar a execução do projeto:
-
+### Exemplo usando o CURL
+#### GET
+*http://localhost:8080/api/v1/mangas/*
 ```
-http://localhost:8080/api/v1/mangas
+curl http://localhost:8080/api/v1/mangas
+```
+*http://localhost:8080/api/v1/mangas/{name}*
+```
+curl http://localhost:8080/api/v1/mangas/Bleach
+```
+
+#### POST
+*http://localhost:8080/api/v1/mangas/*
+```
+curl -d '{"name":"Bleach", "author":"Cubo", "chapters": 500, "genre": "OTHER"}' -H "Content-Type: application/json" -X POST http://localhost:8080/api/v1/mangas/
+```
+
+#### PATCH
+*http://localhost:8080/api/v1/mangas/{id}*
+```
+curl -d '{"name":"Bleach", "author":"Tite Cubo", "chapters": 600, "genre": "SHONEN"}' -H "Content-Type: application/json" -X PATCH http://localhost:8080/api/v1/mangas/1
+```
+
+#### DELETE
+*http://localhost:8080/api/v1/mangas/{id}*
+```
+curl -X DELETE http://localhost:8080/api/v1/mangas/1 
 ```
 
 ### Ferramentas: 
+* Curl 7.71
 * Java 8.
 * Maven 3.6.3 ou versões superiores.
 * Controle de versão GIT.
