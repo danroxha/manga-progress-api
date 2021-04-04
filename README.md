@@ -1,5 +1,5 @@
 ## Manga Progress API
-API REST de gerenciamento de mangas lidos
+API REST de gerenciamento de mangas
 
 ### Observação
 O projeto foi refatorado, para armazenar dados de mangas. Projeto
